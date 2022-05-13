@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/selectedTimeView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="kein Alarm"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/setAlarmBtn"
+        app:layout_constraintTop_toBottomOf="@+id/settingsButton"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/setAlarmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="50dp"
+        android:text="Alarm einschalten"
+        app:layout_constraintBottom_toTopOf="@+id/cancelAlarmBtn"
+        app:layout_constraintTop_toBottomOf="@+id/selectedTimeView"
+        tools:layout_editor_absoluteX="50dp" />
+
+    <Button
+        android:id="@+id/cancelAlarmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="50dp"
+        android:text="Alarm ausschalten"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setAlarmBtn"
+        tools:layout_editor_absoluteX="50dp" />
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/selectedTimeView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_manage"
+        android:background="@null"
+        tools:layout_editor_absoluteX="356dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

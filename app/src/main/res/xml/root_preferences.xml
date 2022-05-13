@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="Zeiten">
+
+        <EditTextPreference
+            android:defaultValue="10"
+            app:key="snoozeTime"
+            app:title="Snooze-Zeit festlegen (Minuten)"
+            app:useSimpleSummaryProvider="true"
+            android:inputType="numberDecimal"
+            android:digits="0123456789"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>
