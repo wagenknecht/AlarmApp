@@ -1,6 +1,8 @@
 package de.wagenknecht.alarmapp;
 
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -82,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent_settings);
             }
         });
-
-
     }
 
     private void cancelAlarm() {
@@ -100,16 +101,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
+        if(calendar == null){
+            Toast.makeText(this, "Bitte erst Alarm einstellen", Toast.LENGTH_SHORT).show();
+        } else {
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlarmReceiver.class);
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
 
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(), pendingIntent);
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(), pendingIntent);
-
-        Toast.makeText(this, "Alarm aktiviert", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Alarm aktiviert", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showTimePicker() {
@@ -127,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 selectedTimeView = findViewById(R.id.selectedTimeView);
 
                 selectedTimeView.setText(String.format("%02d",picker.getHour())+" : "+String.format("%02d",picker.getMinute()));
@@ -139,24 +142,16 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.MILLISECOND,0);
             }
         });
-
-
     }
 
     private void createNotificationChannel() {
+        CharSequence name = "Wecker Benachrichtigungs Kanal";
+        String description = "Zulassen von Benachrichtigungen vom Wecker außerhalb der App";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel weckerChannel = new NotificationChannel("weckerChannel",name,importance);
+        weckerChannel.setDescription(description);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = "Wecker Benachrichtigungs Kanal";
-            String description = "Zulassen von Benachrichtigungen vom Wecker außerhalb der App";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("weckerChannel",name,importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(weckerChannel);
     }
-
-
-
 }
