@@ -19,7 +19,7 @@ import java.util.Calendar;
 
 public class SnoozeActivity extends AppCompatActivity {
 
-    private Context context;
+    Context context;
     Button buttonSnooze;
     Button buttonStop;
 
@@ -47,12 +47,14 @@ public class SnoozeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlarmReceiver.stopPlayer();
                 setAlarm();
+                returnToMain();
             }
         });
         buttonStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlarmReceiver.stopPlayer();
+                returnToMain();
             }
         });
 
@@ -60,20 +62,26 @@ public class SnoozeActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
-
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
 
         pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_MUTABLE);
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() + 60000 * usePreferences(), pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP , Calendar.getInstance().getTimeInMillis() + 60000 * usePreferences(), pendingIntent);
 
-        Toast.makeText(this, "Alarm aktiviert", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Alarm gesnoozet für " + usePreferences() + " min.", Toast.LENGTH_SHORT).show();
     }
 
     public int usePreferences() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return  prefs.getInt("snoozeTime", 10);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SnoozeActivity.this);
+        String snoozeTimeString = prefs.getString("snoozeTime", "10");
+        int snoozeTime = Integer.parseInt(snoozeTimeString);
+        return snoozeTime;
+    }
+
+    public void returnToMain(){
+        Intent intent_main = new Intent(this, MainActivity.class);
+        startActivity(intent_main);
     }
 }
