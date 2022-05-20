@@ -1,6 +1,8 @@
 package de.wagenknecht.alarmapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.preference.PreferenceManager;
 
 import android.app.AlarmManager;
@@ -15,7 +17,12 @@ import android.widget.Toast;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class SnoozeActivity extends AppCompatActivity {
 
@@ -68,9 +75,28 @@ public class SnoozeActivity extends AppCompatActivity {
 
         pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_MUTABLE);
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP , Calendar.getInstance().getTimeInMillis() + 60000 * usePreferences(), pendingIntent);
+        //neue Alarmzeit
+        long longAlarmTime = Calendar.getInstance().getTimeInMillis() + 60000 * usePreferences();
+
+        DateFormat formatter = new SimpleDateFormat("HH:mm", Locale.GERMAN);
+        formatter.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().toZoneId()));
+        String stringAlarmTime = formatter.format(new Date(longAlarmTime));
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP , longAlarmTime, pendingIntent);
 
         Toast.makeText(this, "Alarm gesnoozet für " + usePreferences() + " min.", Toast.LENGTH_SHORT).show();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(SnoozeActivity.this,"weckerChannel")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle("Wecker gesnoozt")
+                .setContentText("Neuer Wecker für " + stringAlarmTime + " Uhr gestellt.")
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(SnoozeActivity.this);
+        notificationManagerCompat.notify(1, builder.build());
     }
 
     public int usePreferences() {
