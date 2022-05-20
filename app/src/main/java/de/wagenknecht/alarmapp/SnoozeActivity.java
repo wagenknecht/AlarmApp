@@ -73,7 +73,7 @@ public class SnoozeActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AlarmReceiver.class);
 
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_MUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
 
         //neue Alarmzeit
         long longAlarmTime = Calendar.getInstance().getTimeInMillis() + 60000 * usePreferences();
@@ -84,6 +84,9 @@ public class SnoozeActivity extends AppCompatActivity {
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP , longAlarmTime, pendingIntent);
 
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0 , mainIntent, PendingIntent.FLAG_IMMUTABLE);
+
         Toast.makeText(this, "Alarm gesnoozet für " + usePreferences() + " min.", Toast.LENGTH_SHORT).show();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(SnoozeActivity.this,"weckerChannel")
@@ -93,7 +96,7 @@ public class SnoozeActivity extends AppCompatActivity {
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent2);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(SnoozeActivity.this);
         notificationManagerCompat.notify(1, builder.build());

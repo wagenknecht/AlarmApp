@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void cancelAlarm() {
         Intent intent = new Intent(this,AlarmReceiver.class);
 
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
 
         if (alarmManager == null){
             alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
