@@ -146,10 +146,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void createNotificationChannel() {
         CharSequence name = "Wecker Benachrichtigungs Kanal";
-        String description = "Zulassen von Benachrichtigungen vom Wecker außerhalb der App";
-        int importance = NotificationManager.IMPORTANCE_HIGH;
-        NotificationChannel weckerChannel = new NotificationChannel("weckerChannel",name,importance);
-        weckerChannel.setDescription(description);
+        NotificationChannel weckerChannel = new NotificationChannel("weckerChannel", name, NotificationManager.IMPORTANCE_HIGH);
+        weckerChannel.setDescription("Benachrichtigungen vom Wecker außerhalb der App");
 
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(weckerChannel);
