@@ -1,10 +1,5 @@
 package de.wagenknecht.alarmapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.preference.PreferenceManager;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,6 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 
@@ -90,7 +90,7 @@ public class SnoozeActivity extends AppCompatActivity {
         Toast.makeText(this, "Alarm gesnoozet für " + usePreferences() + " min.", Toast.LENGTH_SHORT).show();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(SnoozeActivity.this,"weckerChannel")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Wecker gesnoozt")
                 .setContentText("Neuer Wecker für " + stringAlarmTime + " Uhr gestellt.")
                 .setAutoCancel(true)
@@ -105,8 +105,7 @@ public class SnoozeActivity extends AppCompatActivity {
     public int usePreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SnoozeActivity.this);
         String snoozeTimeString = prefs.getString("snoozeTime", "10");
-        int snoozeTime = Integer.parseInt(snoozeTimeString);
-        return snoozeTime;
+        return Integer.parseInt(snoozeTimeString);
     }
 
     public void returnToMain(){
