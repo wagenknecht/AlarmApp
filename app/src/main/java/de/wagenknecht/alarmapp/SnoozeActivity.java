@@ -73,7 +73,7 @@ public class SnoozeActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AlarmReceiver.class);
 
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         //neue Alarmzeit
         long longAlarmTime = Calendar.getInstance().getTimeInMillis() + 60000 * usePreferences();
@@ -82,14 +82,14 @@ public class SnoozeActivity extends AppCompatActivity {
         formatter.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().toZoneId()));
         String stringAlarmTime = formatter.format(new Date(longAlarmTime));
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP , longAlarmTime, pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, longAlarmTime, pendingIntent);
 
         Intent mainIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0 , mainIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Toast.makeText(this, "Alarm gesnoozet für " + usePreferences() + " min.", Toast.LENGTH_SHORT).show();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(SnoozeActivity.this,"weckerChannel")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(SnoozeActivity.this, "weckerChannel")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Wecker gesnoozt")
                 .setContentText("Neuer Wecker für " + stringAlarmTime + " Uhr gestellt.")
@@ -108,7 +108,7 @@ public class SnoozeActivity extends AppCompatActivity {
         return Integer.parseInt(snoozeTimeString);
     }
 
-    public void returnToMain(){
+    public void returnToMain() {
         Intent intent_main = new Intent(this, MainActivity.class);
         startActivity(intent_main);
     }

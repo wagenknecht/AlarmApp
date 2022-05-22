@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cancelAlarm() {
-        Intent intent = new Intent(this,AlarmReceiver.class);
+        Intent intent = new Intent(this, AlarmReceiver.class);
 
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        if (alarmManager == null){
+        if (alarmManager == null) {
             alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         }
 
@@ -95,17 +95,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
-        if(calendar == null){
+        if (calendar == null) {
             Toast.makeText(this, "Bitte erst Alarm einstellen", Toast.LENGTH_SHORT).show();
         } else {
             alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
             Intent intent = new Intent(this, AlarmReceiver.class);
-
-            pendingIntent = PendingIntent.getBroadcast(this,0,intent, PendingIntent.FLAG_IMMUTABLE);
-
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis(), pendingIntent);
-
+            pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             Toast.makeText(this, "Alarm aktiviert", Toast.LENGTH_SHORT).show();
         }
     }
@@ -120,20 +116,20 @@ public class MainActivity extends AppCompatActivity {
                 .setTitleText("Uhrzeit stellen")
                 .build();
 
-        picker.show(getSupportFragmentManager(),"wecker");
+        picker.show(getSupportFragmentManager(), "wecker");
 
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedTimeView = findViewById(R.id.selectedTimeView);
 
-                selectedTimeView.setText(String.format("%02d",picker.getHour())+" : "+String.format("%02d",picker.getMinute()));
+                selectedTimeView.setText(String.format("%02d", picker.getHour()) + " : " + String.format("%02d", picker.getMinute()));
 
                 calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR_OF_DAY,picker.getHour());
-                calendar.set(Calendar.MINUTE,picker.getMinute());
-                calendar.set(Calendar.SECOND,0);
-                calendar.set(Calendar.MILLISECOND,0);
+                calendar.set(Calendar.HOUR_OF_DAY, picker.getHour());
+                calendar.set(Calendar.MINUTE, picker.getMinute());
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
             }
         });
     }

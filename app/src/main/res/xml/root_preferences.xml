@@ -9,7 +9,6 @@
             app:title="Snooze-Zeit festlegen (Minuten)"
             app:useSimpleSummaryProvider="true"
             android:inputType="numberDecimal"
-            android:digits="0123456789"
-            />
+            android:digits="0123456789" />
     </PreferenceCategory>
 </PreferenceScreen>

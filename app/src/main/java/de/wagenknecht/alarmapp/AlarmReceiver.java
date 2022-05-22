@@ -17,9 +17,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent i = new Intent(context, SnoozeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         i.setClassName("de.wagenknecht.alarmapp", "de.wagenknecht.alarmapp.SnoozeActivity");
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,i,PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"weckerChannel")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "weckerChannel")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Wecker klingelt")
                 .setContentText("Dein gestellter Wecker klingelt")
@@ -39,7 +39,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         player.start();
     }
 
-    public static void stopPlayer(){
+    public static void stopPlayer() {
         player.stop();
     }
 }
