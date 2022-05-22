@@ -14,8 +14,9 @@
         android:layout_marginHorizontal="50dp"
         android:text="Snooze"
         app:layout_constraintBottom_toTopOf="@+id/buttonStop"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="50dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonStop"
@@ -24,6 +25,7 @@
         android:layout_marginHorizontal="50dp"
         android:text="Stop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSnooze"
-        tools:layout_editor_absoluteX="50dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSnooze" />
 </androidx.constraintlayout.widget.ConstraintLayout>
